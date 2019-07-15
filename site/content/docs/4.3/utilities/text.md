@@ -65,6 +65,16 @@ Transform text in components with text capitalization classes.
 
 Note how `.text-capitalize` only changes the first letter of each word, leaving the case of any other letters unaffected.
 
+## Font size
+
+Change the font size. Larger font sizes are rescaled by [RFS](https://github.com/twbs/rfs) on smaller viewports.
+
+{{< example >}}
+<p class="text-sm">Small text.</p>
+<p class="text-base">Normal text.</p>
+<p class="text-lg">Larger text.</p>
+<p class="text-xl">Extra large text.</p>
+{{< /example >}}
 ## Font weight and italics
 
 Quickly change the weight (boldness) of text or italicize text.
