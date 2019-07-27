@@ -23,23 +23,24 @@
     // Don't prefix if value key is null (eg. with shadow class)
     $property-class-modifier: if($key, "-" + $key, "");
 
-    @if $isRfsMediaQuery and map-get($utility, rfs) {
-      $val: rfs-value($value);
-      $fluidVal: rfs-fluid-value($value);
-      @if $val != $fluidVal {
-        .#{$property-class + $infix + $property-class-modifier} {
-          @each $property in $properties {
-            // stylelint-disable-next-line declaration-no-important
-            #{$property}: #{$val} !important;
-          }
-        }
+    @if map-get($utility, rfs) {
+      // Inside the media query
+      @if $isRfsMediaQuery {
+        $val: rfs-value($value);
+
+        // Do not render anything if fluid and non fluid values are the same
+        $value: if($val == rfs-fluid-value($value), null, $val);
+      }
+      @else {
+        $value: rfs-fluid-value($value);
       }
     }
-    @else {
+
+    @if $value != null {
       .#{$property-class + $infix + $property-class-modifier} {
         @each $property in $properties {
           // stylelint-disable-next-line declaration-no-important
-          #{$property}: #{if(map-get($utility, rfs), rfs-fluid-value($value), $value)} !important;
+          #{$property}: $value !important;
         }
       }
     }
