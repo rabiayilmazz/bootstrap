@@ -175,7 +175,7 @@ $rfs-mq-property-height: if($rfs-mode == max-media-query, max-height, min-height
   }
 
   // Remove first space
-  @return str-slice($val, 2);
+  @return unquote(str-slice($val, 2));
 }
 
 // Helper function to get the responsive value calculated by RFS
@@ -237,7 +237,7 @@ $rfs-mq-property-height: if($rfs-mode == max-media-query, max-height, min-height
   }
 
   // Remove first space
-  @return str-slice($val, 2);
+  @return unquote(str-slice($val, 2));
 }
 
 // RFS mixin
@@ -247,18 +247,18 @@ $rfs-mq-property-height: if($rfs-mode == max-media-query, max-height, min-height
 
   // Do not print the media query if responsive & non-responsive values are the same
   @if $val == $fluidVal {
-    #{$property}: #{$val};
+    #{$property}: $val;
   }
   @else {
     @include _rfs-rule {
-      #{$property}: unquote(if($rfs-mode == max-media-query, $val, $fluidVal));
+      #{$property}: if($rfs-mode == max-media-query, $val, $fluidVal);
 
       // Include safari iframe resize fix if needed
       min-width: if($rfs-safari-iframe-resize-bug-fix, (0 * 1vw), null);
     }
 
     @include _rfs-media-query-rule {
-      #{$property}: unquote(if($rfs-mode == max-media-query, $fluidVal, $val));
+      #{$property}: if($rfs-mode == max-media-query, $fluidVal, $val);
     }
   }
 }
